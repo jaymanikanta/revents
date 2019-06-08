@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Menu, Container, Button } from "semantic-ui-react";
 
+/**
+ * Acts as the main Navigation Bar.
+ * @returns MenuBar and MenuItem with Create Event and Login/Sign Out Buttons.
+ */
 class NavBar extends Component {
   render() {
     return (

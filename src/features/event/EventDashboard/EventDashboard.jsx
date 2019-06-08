@@ -3,16 +3,84 @@ import { Grid, Button } from "semantic-ui-react";
 import EventList from "../EventList/EventList";
 import EventForm from "../EventForm/EventForm";
 
+const eventsFromDashboard = [
+  {
+    id: "1",
+    title: "Trip to Tower of London",
+    date: "2018-03-27T11:00:00+00:00",
+    category: "culture",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
+    city: "London, UK",
+    venue: "Tower of London, St Katharine's & Wapping, London",
+    hostedBy: "Claire",
+    hostPhotoURL: "https://randomuser.me/api/portraits/women/20.jpg",
+    attendees: [
+      {
+        id: "a",
+        name: "Claire",
+        photoURL: "https://randomuser.me/api/portraits/women/20.jpg"
+      },
+      {
+        id: "b",
+        name: "Emma",
+        photoURL: "https://randomuser.me/api/portraits/women/22.jpg"
+      }
+    ]
+  },
+  {
+    id: "2",
+    title: "Trip to Punch and Judy Pub",
+    date: "2018-03-28T14:00:00+00:00",
+    category: "drinks",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
+    city: "London, UK",
+    venue: "Punch & Judy, Henrietta Street, London, UK",
+    hostedBy: "Emma",
+    hostPhotoURL: "https://randomuser.me/api/portraits/women/22.jpg",
+    attendees: [
+      {
+        id: "b",
+        name: "Emma",
+        photoURL: "https://randomuser.me/api/portraits/women/22.jpg"
+      },
+      {
+        id: "a",
+        name: "Claire",
+        photoURL: "https://randomuser.me/api/portraits/women/20.jpg"
+      }
+    ]
+  }
+];
+
+/**
+ * Acts as the main Events Dashboard which coordinates the data to other child components
+ * Contains two column grids.
+ * @returns Left column containing EventList and right containing EventForm.
+ */
 class EventDashboard extends Component {
+  state = {
+    events: eventsFromDashboard,
+    isOpen: false
+  };
+
+  handleIsOpenToggle = () => {
+      this.setState(({isOpen}) => ({
+          isOpen: !isOpen
+    }));
+  }
+
   render() {
+    const { events, isOpen } = this.state;
     return (
       <Grid>
         <Grid.Column width={10}>
-          <EventList />
+          <EventList events={events} />
         </Grid.Column>
         <Grid.Column width={6}>
-          <Button positive content="Create Event" />
-          <EventForm />
+          <Button onClick={this.handleIsOpenToggle} positive content="Create Event" />
+          {isOpen && <EventForm cancelFormOpen={this.handleIsOpenToggle} />}
         </Grid.Column>
       </Grid>
     );
